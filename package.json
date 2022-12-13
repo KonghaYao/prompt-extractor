@@ -1,0 +1,32 @@
+{
+    "name": "prompt-extractor",
+    "version": "1.1.1",
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist",
+        "src",
+        "test"
+    ],
+    "description": "It' s a NAI, SD, PaddleNLP AI Image Information Extractor!",
+    "scripts": {
+        "dev": "vite dev",
+        "build": "vite build & tsc -p tsconfig.node.json",
+        "test": "vitest",
+        "coverage": "vitest run --coverage ",
+        "prepublish": "pnpm build"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@vitest/coverage-c8": "^0.24.5",
+        "browserslist": "^4.21.4",
+        "codecov": "^3.8.3",
+        "vite": "^3.1.8",
+        "vitest": "^0.24.5"
+    },
+    "dependencies": {
+        "png-chunk-text": "^1.0.0",
+        "png-chunks-extract": "^1.0.0",
+        "pretty-bytes": "^6.0.0"
+    }
+}
