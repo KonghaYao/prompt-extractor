@@ -96,4 +96,37 @@ describe("实战测试", () => {
             },
         });
     });
+    it("SD2", async () => {
+        const data = await PromptExtractor(fs.readFileSync("./assets/SD2.png"));
+        expect(data).toEqual({
+            Title: "AI generated from Stable Diffusion",
+            Description:
+                "{{{{{High heels}}}}},{{{{{Silk stockings}}}}},White background,{{{a man}}},{{{Chastity lock}}},{{{Hands at the sides of the legs}}},{{{naked}}},{{{Small penis}}},blonde_hair,Long hair ,Standing,high heels,octane render,style of bubble bobble,lineup,game cg,portrait,upper body,lower body,cowboy shot",
+            Software: "Stable Diffusion",
+            Source: "Stable Diffusion",
+            Comment: {
+                uc: "lowres, bad anatomy, bad hands, text,error, missing fngers,extra digt ,fewer digits,cropped, wort quality ,low quality,normal quality, jpeg artifacts,signature,watermark, username, blurry, bad feets",
+                steps: "40",
+                sampler: "Euler a",
+                scale: "7",
+                seed: "4230162917",
+                noise: undefined,
+                strength: undefined,
+            },
+            others: {
+                "Negative prompt":
+                    "lowres, bad anatomy, bad hands, text,error, missing fngers,extra digt ,fewer digits,cropped, wort quality ,low quality,normal quality, jpeg artifacts,signature,watermark, username, blurry, bad feets",
+                Steps: "40",
+                Sampler: "Euler a",
+                "CFG scale": "7",
+                Seed: "4230162917",
+                Size: "256x512",
+                "Model hash": "925997e9",
+                "Denoising strength": "0.85",
+                "Clip skip": "2",
+                ENSD: "31337",
+                "Mask blur": "4",
+            },
+        });
+    });
 });

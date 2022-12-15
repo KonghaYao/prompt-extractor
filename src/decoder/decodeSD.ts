@@ -1,7 +1,8 @@
 import { AIImageInfo } from "../index";
 
 export const decodeSD = async (result: Map<string, string>) => {
-    const infoText = result.get("__TEXT__");
+    const infoText =
+        result.size === 1 ? [...result.values()][0] : result.get("__TEXT__");
     const [prompt, Negative, others] = infoText.split("\n");
     const comments = Object.fromEntries(
         [Negative, ...others.split(",")]
