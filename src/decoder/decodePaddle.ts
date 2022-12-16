@@ -3,8 +3,9 @@ import { AIImageInfo } from "../index";
 export const decodePaddle = async (result: Map<string, string>) => {
     if (result.get("Software") === "PaddleNLP") {
         const infoText = result.get("__TEXT__");
-
-        const [prompt, ...others] = infoText.split("\n");
+        console.log(infoText);
+        const [mainText, other] = infoText.split("Negative prompt:");
+        const others = ("Negative prompt:" + other).split("\n");
         const comments = Object.fromEntries(
             others
                 .map((i) => i.split(":").map((i) => i.trim()))
@@ -12,7 +13,7 @@ export const decodePaddle = async (result: Map<string, string>) => {
         );
         return {
             Title: result.get("Title") ?? "AI generated from PaddleNLP",
-            Description: prompt,
+            Description: mainText,
             Software: result.get("Software"),
             Source: result.get("Source") ?? "PaddleNLP",
             Comment: {
