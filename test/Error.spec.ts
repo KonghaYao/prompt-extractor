@@ -7,7 +7,6 @@ describe("实战测试", () => {
         const data = await PromptExtractor(
             fs.readFileSync("./assets/BreakLinePaddle.png")
         );
-        console.log(data);
         expect(data).toEqual({
             Comment: {
                 noise: undefined,
@@ -43,6 +42,50 @@ describe("实战测试", () => {
                 skip_weighting: "False",
                 superres_model_name: "无",
                 width: "512",
+            },
+        });
+    });
+    it("Paddle Huge Size Image Error", async () => {
+        const data = await PromptExtractor(
+            fs.readFileSync("./assets/Paddle_huge.png")
+        );
+        console.log(data);
+        expect(data).toEqual({
+            Title: "AI generated from PaddleNLP",
+            Description:
+                "(((extremely detailed CG unity 8k wallpaper))),((highly detailed)),((best quality)),\n" +
+                "looking at viewer,close up,\n" +
+                "((detailed beautiful face)),aqua eyes,(wide-eyed),hair flower,long black hair,wet clothes,serafuku,bathing,(((water))),((fog)),red lips",
+            Software: "PaddleNLP",
+            Source: "PaddleNLP",
+            Comment: {
+                uc: "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
+                steps: "40",
+                sampler: "DDIM",
+                scale: "12.0",
+                seed: "3021703102",
+                noise: undefined,
+                strength: undefined,
+            },
+            others: {
+                "Negative prompt":
+                    "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry",
+                Steps: "40",
+                Sampler: "DDIM",
+                "CFG scale": "12.0",
+                Seed: "3021703102",
+                width: "1024",
+                height: "256",
+                num_images_per_prompt: "1",
+                eta: "0.0",
+                latents: "None",
+                max_embeddings_multiples: "3",
+                no_boseos_middle: "False",
+                skip_parsing: "False",
+                skip_weighting: "False",
+                epoch_time: "1671367282.08157",
+                superres_model_name: "falsr_a",
+                model_name: "Linaqruf/anything-v3.0",
             },
         });
     });

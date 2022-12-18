@@ -2,8 +2,8 @@ import { AIImageInfo } from "../index";
 
 export const decodePaddle = async (result: Map<string, string>) => {
     if (result.get("Software") === "PaddleNLP") {
-        const infoText = result.get("__TEXT__");
-        // console.log(infoText);
+        const infoText = result.get("__TEXT__") ?? result.get("parameters");
+        // console.log(result);
         const [mainText, other] = infoText.split("Negative prompt:");
         const others = ("Negative prompt:" + other).split("\n");
         const comments = Object.fromEntries(

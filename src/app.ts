@@ -6,7 +6,7 @@ const app = async () => {
             await fetch("./assets/NovelAI.png").then((res) => res.arrayBuffer())
         )
     );
-    const file = await fetch("./assets/SD.png").then((res) =>
+    const file = await fetch("./assets/Paddle_huge.png").then((res) =>
         res.arrayBuffer()
     );
     const data = await PromptExtractor(file);
