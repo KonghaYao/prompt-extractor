@@ -1,11 +1,20 @@
 import { AIImageInfo } from "../index";
 
 export const decodeSD = async (result: Map<string, string>) => {
-    const infoText =
-        result.size === 1 ? [...result.values()][0] : result.get("__TEXT__");
-    // console.log(infoText);
-    const [prompt, other] = infoText.split("Negative prompt:");
-    const [Negative, others] = ("Negative prompt:" + other).split("\n");
+    const infoText = result.has("parameters")
+        ? [...result.values()][0]
+        : result.get("__TEXT__");
+
+    // 只截断第一个 断行的
+    const [prompt, other] = infoText.split(/[\n|,]Negative prompt:/);
+    // console.log(other);
+    const [Negative, others] = // 如果重复写了 Negative prompt，那么不进行重复写
+        (
+            other.trim().startsWith("Negative prompt:")
+                ? other
+                : "Negative prompt:" + other
+        ).split("\n");
+
     const comments = Object.fromEntries(
         [Negative, ...others.split(",")]
             .map((i) => i.split(":").map((i) => i.trim()))
@@ -26,5 +35,16 @@ export const decodeSD = async (result: Map<string, string>) => {
             strength: undefined,
         },
         others: comments,
+        extras: result.has("extras")
+            ? result
+                  .get("extras")
+                  .split(/\n/)
+                  .filter((i) => i)
+                  .map((i) => {
+                      return Object.fromEntries(
+                          i.split(",").map((i) => i.split(":"))
+                      );
+                  })
+            : undefined,
     } as AIImageInfo;
 };

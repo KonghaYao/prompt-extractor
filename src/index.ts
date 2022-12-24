@@ -18,6 +18,8 @@ export interface AIImageInfo {
         strength: string;
     };
     others?: Record<string, string>;
+    // SD 特有的 extras
+    extras?: Record<string, string>[];
 }
 
 export const PromptExtractor = async (
