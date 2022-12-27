@@ -91,7 +91,7 @@ describe("实战测试", () => {
     });
     it("Stable Diffusion Extras Property", async () => {
         const data = await PromptExtractor(fs.readFileSync("./assets/SD3.png"));
-        // console.log(data);
+        console.log(data.Comment.uc);
         expect(data).toEqual({
             Title: "AI generated from Stable Diffusion",
             Description:
@@ -99,7 +99,7 @@ describe("实战测试", () => {
             Software: "Stable Diffusion",
             Source: "Stable Diffusion",
             Comment: {
-                uc: "loli, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet, lowres,bad anatomy,bad hands,text,error,missing fingers,extra digit,fewer digits,cropped,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,username,blurry,missing arms,long neck,Humpbacked, (futanari",
+                uc: "loli, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet, lowres,bad anatomy,bad hands,text,error,missing fingers,extra digit,fewer digits,cropped,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,username,blurry,missing arms,long neck,Humpbacked, (futanari:1.5), anal, (anal object insertion)",
                 steps: "40",
                 sampler: "Euler a",
                 scale: "4",
@@ -109,7 +109,7 @@ describe("实战测试", () => {
             },
             others: {
                 "Negative prompt":
-                    "loli, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet, lowres,bad anatomy,bad hands,text,error,missing fingers,extra digit,fewer digits,cropped,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,username,blurry,missing arms,long neck,Humpbacked, (futanari",
+                    "loli, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, bad feet, lowres,bad anatomy,bad hands,text,error,missing fingers,extra digit,fewer digits,cropped,worst quality,low quality,normal quality,jpeg artifacts,signature,watermark,username,blurry,missing arms,long neck,Humpbacked, (futanari:1.5), anal, (anal object insertion)",
                 Steps: "40",
                 Sampler: "Euler a",
                 "CFG scale": "4",
@@ -131,7 +131,7 @@ describe("实战测试", () => {
     });
     it("Stable Diffusion Negative Error ", async () => {
         const data = await PromptExtractor(fs.readFileSync("./assets/SD4.png"));
-        // console.log(data);
+        // console.log(data.Description);
         expect(data).toEqual({
             Title: "AI generated from Stable Diffusion",
             Description:
@@ -169,6 +169,40 @@ describe("实战测试", () => {
                     " model": "R-ESRGAN 4x+",
                 },
             ],
+        });
+    });
+    it("Stable Diffusion No Negative Error ", async () => {
+        const data = await PromptExtractor(
+            fs.readFileSync("./assets/no-negative.png")
+        );
+        expect(data).toEqual({
+            Title: "AI generated from Stable Diffusion",
+            Description:
+                "best quality, masterpiece, highres, original, extremely detailed wallpaper，{best quality}, {{masterpiece}}, {highres}, original, extremely detailed wallpaper, 1girl，{an extremely delicate and beautiful}:",
+            Software: "Stable Diffusion",
+            Source: "Stable Diffusion",
+            Comment: {
+                uc: "",
+                steps: "20",
+                sampler: undefined,
+                scale: "7",
+                seed: "1713774310",
+                noise: undefined,
+                strength: undefined,
+            },
+            others: {
+                Steps: "20",
+                "CFG scale": "7",
+                Seed: "1713774310",
+                Size: "640x1216",
+                "Model hash": "925997e9",
+                "Denoising strength": "0.5",
+                "Clip skip": "2",
+                ENSD: "31337",
+                "Mask blur": "4",
+                "Negative prompt": "",
+            },
+            extras: undefined,
         });
     });
 });

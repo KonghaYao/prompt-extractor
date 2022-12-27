@@ -6,20 +6,21 @@ export const decodeSD = async (result: Map<string, string>) => {
         : result.get("__TEXT__");
 
     // 只截断第一个 断行的
-    const [prompt, other] = infoText.split(/[\n|,]Negative prompt:/);
+    const chunks = infoText.split(/\n/);
+    const N = chunks.findIndex((i) => i.startsWith("Negative prompt"));
+    const S = chunks.findIndex((i) => i.startsWith("Steps"));
+    const prompt = chunks.slice(0, N).join("\n");
     // console.log(other);
-    const [Negative, others] = // 如果重复写了 Negative prompt，那么不进行重复写
-        (
-            other.trim().startsWith("Negative prompt:")
-                ? other
-                : "Negative prompt:" + other
-        ).split("\n");
+    const Negative = (chunks.slice(N, S).join("\n") ?? "")
+        .replace(/^(Negative prompt:\s*)+/, "")
+        .trim();
 
     const comments = Object.fromEntries(
-        [Negative, ...others.split(",")]
+        chunks[S].split(",")
             .map((i) => i.split(":").map((i) => i.trim()))
             .filter((i) => i[0])
     );
+    comments["Negative prompt"] = Negative;
     return {
         Title: result.get("Title") ?? "AI generated from Stable Diffusion",
         Description: prompt.trim(),
